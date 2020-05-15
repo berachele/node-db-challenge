@@ -45,27 +45,93 @@ router.get('/tasks', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    
+    const newProj = req.body
+    Proj.addProject(newProj)
+    .then(success => {
+        res.status(201).json({
+            success: `Created '${success.name}' to projects`
+        })
+    })
+    .catch(err => {
+        console.loge({err})
+        res.status(500).json({
+            message: "There was an error creating this project"
+        })
+    })
 })
 
 router.post('/resources', (req, res) => {
-    
+    const newRes = req.body
+    Proj.addResource(newRes)
+    .then(success => {
+        res.status(201).json({
+            success: `Created '${success.name}' to resources`
+        })
+    })
+    .catch(err => {
+        console.loge({err})
+        res.status(500).json({
+            message: "There was an error creating this resource"
+        })
+    })
 })
 
 router.post('/tasks', (req, res) => {
-    
+    const newTask = req.body
+    Proj.addTask(newTask)
+    .then(success => {
+        res.status(201).json({
+            success: `Created '${success.description}' to tasks`
+        })
+    })
+    .catch(err => {
+        console.loge({err})
+        res.status(500).json({
+            message: "There was an error creating this task"
+        })
+    })
 })
 
-// router.get('/:id', (req, res) => {
-    
-// })
+router.get('/:id', (req, res) => {
+    const id = req.params.id
+    Proj.getProjectByID(id)
+    .then(get => {
+        res.status(200).json(get)
+    })
+    .catch(err => {
+        console.log({err})
+        res.status(500).json({
+            message: "There was an error retrieving project data"
+        })
+    })
+})
 
-// router.get('/:id/resources', (req, res) => {
-    
-// })
+router.get('/resources/:id', (req, res) => {
+    const id = req.params.id
+    Proj.getResourceByID(id)
+    .then(get => {
+        res.status(200).json(get)
+    })
+    .catch(err => {
+        console.log({err})
+        res.status(500).json({
+            message: "There was an error retrieving resource data"
+        })
+    })
+})
 
-// router.get('/:id/tasks', (req, res) => {
-    
-// })
+router.get('/tasks/:id', (req, res) => {
+    const id = req.params.id
+    Proj.getTaskByID(id)
+    .then(get => {
+        res.status(200).json(get)
+    })
+    .catch(err => {
+        console.log({err})
+        res.status(500).json({
+            message: "There was an error retrieving task data"
+        })
+    })
+})
 
 module.exports = router
