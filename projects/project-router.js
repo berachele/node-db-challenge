@@ -164,4 +164,90 @@ router.get('/:id/tasks', (req, res) => {
     })
 })
 
+router.put('/:id', (req, res) => {
+    const id = req.params.id
+    Proj.updateProject(id)
+    .then(updated => {
+        res.status(200).json(updated)
+    })
+    .catch(err => {
+        console.loge({err})
+        res.status(500).json({
+            message: "There was an error updating this project"
+        })
+    })
+
+})
+
+router.put('/resources/:id', (req, res) => {
+    const id = req.params.id
+    Proj.updateResource(id)
+    .then(updated => {
+        res.status(200).json(updated)
+    })
+    .catch(err => {
+        console.loge({err})
+        res.status(500).json({
+            message: "There was an error updating this resource"
+        })
+    })
+})
+
+router.put('/tasks/:id', (req, res) => {
+    const id = req.params.id
+    Proj.updateTask(id)
+    .then(updated => {
+        res.status(200).json(updated)
+    })
+    .catch(err => {
+        console.loge({err})
+        res.status(500).json({
+            message: "There was an error updating this task"
+        })
+    })
+})
+
+router.delete('/:id', (req, res) => {
+    const id = req.params.id
+    Proj.removeProject(id)
+    .then(success => {
+        res.status(200).json({removed: success})
+    })
+    .catch(err => {
+        console.log({err})
+        res.status(500).json({
+            message: "There was an error deleting this project"
+        })
+    })
+})
+
+router.delete('/resources/:id', (req, res) => {
+    const id = req.params.id
+    Proj.removeProject(id)
+    .then(success => {
+        res.status(200).json({removed: success})
+    })
+    .catch(err => {
+        console.log({err})
+        res.status(500).json({
+            message: "There was an error deleting this resource"
+        })
+    })
+})
+
+router.delete('/tasks/:id', (req, res) => {
+    const id = req.params.id
+    Proj.removeProject(id)
+    .then(success => {
+        res.status(200).json({removed: success})
+    })
+    .catch(err => {
+        console.log({err})
+        res.status(500).json({
+            message: "There was an error deleting this task"
+        })
+    })
+})
+
+
 module.exports = router

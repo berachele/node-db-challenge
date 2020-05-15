@@ -11,7 +11,13 @@ module.exports = {
     getProjectByID,
     getTaskByID,
     resourceList,
-    taskList
+    taskList,
+    updateResource,
+    removeResource,
+    updateProject,
+    removeProject,
+    updateTask,
+    removeTask,
 }
 
 function addResource(newResource) {
@@ -79,4 +85,40 @@ function taskList(id) {
     .from("task as t")
     .join("project as p", "p.id" ,"=", "t.projectID")
     .where({projectID: id})
+}
+
+function updateResource(id, changes) {
+    return db("resource").where({id})
+    .update(changes)
+    .then(ids => {
+        return getResourceByID(ids[0])
+    })
+}
+
+function removeResource(id) {
+    return db("resource").where({id}).del()
+}
+
+function updateProject(id, changes) {
+    return db("project").where({id})
+    .update(changes)
+    .then(ids => {
+        return getProjectByID(ids[0])
+    })
+}
+
+function removeProject(id) {
+    return db("project").where({id}).del()
+}
+
+function updateTask(id, changes) {
+    return db("task").where({id})
+    .update(changes)
+    .then(ids => {
+        return getTaskByID(ids[0])
+    })
+}
+
+function removeTask(id) {
+    return db("task").where({id}).del()
 }
