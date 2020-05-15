@@ -9,7 +9,9 @@ module.exports = {
     getTask,
     getResourceByID,
     getProjectByID,
-    getTaskByID
+    getTaskByID,
+    resourceList,
+    taskList
 }
 
 function addResource(newResource) {
@@ -23,10 +25,6 @@ function getResource() {
     return db("resource")
 }
 
-function getResourceByID(id) {
-    return db("resource").where({id}).first()
-}
-
 function addProject(newProject) {
     return db("project").insert(newProject)
     .then(show => {
@@ -38,10 +36,6 @@ function getProject() {
     return db("project")
 }
 
-function getProjectByID(id) {
-    return db("project").where({id}).first()
-}
-
 function addTask(newTask) {
     return db("task").insert(newTask)
     .then(show => {
@@ -51,14 +45,38 @@ function addTask(newTask) {
 
 function getTask() {
 //get list of tasks showing BOTH project name and description
-// select t.id, p.name as project_name, p.description as project_description, t.description, t.notes, t.complete
-// from task as t
-// join project as p on p.id = t.projectID;
     return db.select("t.id", "p.name as project_name", "p.description as project_description", "t.description", "t.notes", "t.complete")
     .from("task as t")
     .join("project as p", "p.id", "=", "t.projectID")
 }
 
+//stretch endpoints
+
+function getResourceByID(id) {
+    return db("resource").where({id}).first()
+}
+
+function getProjectByID(id) {
+    return db("project").where({id}).first()
+}
+
 function getTaskByID(id) {
     return db("task").where({id}).first()
+}
+
+function resourceList(id) {
+//given project id and returns resources list for that project:
+    return db.select("r.id", "PR.projectID", "p.name as product_name", "r.name", "r.description")
+    .from("resource as r")
+    .join("project as p", "p.id", "=", "PR.projectID")
+    .join("project_resources as PR", "r.id", "=", "PR.resourceID")
+    .where({projectID: id})
+}
+
+function taskList(id) {
+//given project id and returns tasks list for that project:
+    return db.select("t.id", "t.projectID", "p.name as product_name", "p.description as project_description", "t.description", "t.notes", "t.complete")
+    .from("task as t")
+    .join("project as p", "p.id" ,"=", "t.projectID")
+    .where({projectID: id})
 }

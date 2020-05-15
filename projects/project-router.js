@@ -49,7 +49,7 @@ router.post('/', (req, res) => {
     Proj.addProject(newProj)
     .then(success => {
         res.status(201).json({
-            success: `Created '${success.name}' to projects`
+            success: success
         })
     })
     .catch(err => {
@@ -65,7 +65,7 @@ router.post('/resources', (req, res) => {
     Proj.addResource(newRes)
     .then(success => {
         res.status(201).json({
-            success: `Created '${success.name}' to resources`
+            success: success
         })
     })
     .catch(err => {
@@ -81,7 +81,7 @@ router.post('/tasks', (req, res) => {
     Proj.addTask(newTask)
     .then(success => {
         res.status(201).json({
-            success: `Created '${success.description}' to tasks`
+            success: success
         })
     })
     .catch(err => {
@@ -91,6 +91,8 @@ router.post('/tasks', (req, res) => {
         })
     })
 })
+
+//stretch requests
 
 router.get('/:id', (req, res) => {
     const id = req.params.id
@@ -130,6 +132,34 @@ router.get('/tasks/:id', (req, res) => {
         console.log({err})
         res.status(500).json({
             message: "There was an error retrieving task data"
+        })
+    })
+})
+
+router.get('/:id/resources', (req, res) => {
+    const id = req.params.id
+    Proj.resourceList(id)
+    .then(list => {
+        res.status(200).json(list)
+    })
+    .catch(err => {
+        console.log({err})
+        res.status(500).json({
+            message: "There was an error retrieving this resource"
+        })
+    })
+})
+
+router.get('/:id/tasks', (req, res) => {
+    const id = req.params.id
+    Proj.taskList(id)
+    .then(list => {
+        res.status(200).json(list)
+    })
+    .catch(err => {
+        console.log({err})
+        res.status(500).json({
+            message: "There was an error retrieving this task"
         })
     })
 })
