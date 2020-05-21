@@ -5,7 +5,7 @@ exports.up = function(knex) {
     project.increments()
     project.string("name").notNullable()
     project.string("description", 255)
-    project.integer("complete").defaultTo(0)
+    project.boolean("complete").defaultTo(false)
   })
 
   .createTable("task", task => {
@@ -18,7 +18,7 @@ exports.up = function(knex) {
         .onDelete("RESTRICT")
     task.string("description", 255).notNullable()
     task.string("notes")
-    task.integer("complete").defaultTo(0)
+    task.boolean("complete").defaultTo(false)
   })
 
   .createTable("resource", resource => {

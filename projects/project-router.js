@@ -8,6 +8,7 @@ const Proj = require('./project-model')
 router.get('/', (req, res) => {
     Proj.getProject()
     .then(list => {
+        console.log({list})
         res.status(200).json(list)
     })
     .catch(err => {
