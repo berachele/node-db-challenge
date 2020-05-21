@@ -69,7 +69,7 @@ router.post('/resources', (req, res) => {
         })
     })
     .catch(err => {
-        console.loge({err})
+        console.log({err})
         res.status(500).json({
             message: "There was an error creating this resource"
         })

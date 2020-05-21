@@ -40,12 +40,27 @@ describe('project-router', () => {
     })
 
     describe('POST /', () => {
-        it.todo('should add a new project')
+        it('should add a new project', () => {
+            return supertest(server)
+            .post('/api/projects')
+            .send({name: "Take a break", description: "It's important, you can do this!"})
+            .then(response => {
+                expect(response.status).toEqual(201)
+            })
+        })
         it.todo('should return that object (array of 1)')
     })
 
     describe('POST /resources', () => {
-        it.todo('should add a new resource')
+        // it('should add a new resource', () => {
+        //     return supertest(server)
+        //     .post('/api/projects/resources')
+        //     .send({name: "Bed", description: "for napping"})
+        //     .then(response => {
+        //         expect(response.status).toEqual(201)
+        //     })
+        // })
+
         it.todo('should return that object (array of 1)')
     })
 
