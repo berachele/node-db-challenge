@@ -1,10 +1,5 @@
 const supertest = require('supertest')
 const server = require('./server')
-const db = require('./data/db-config')
-
-// afterEach(async () => {
-//     await db('project').truncate()
-// })
 
 describe('server', () => {
     it('can run the test', () => {
