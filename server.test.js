@@ -13,9 +13,20 @@ describe('server', () => {
 
     describe('GET /', () => {
         it('should return status code 200', () => {
-            return supertest(server).get('/').then(res => {
+            return supertest(server)
+            .get('/')
+            .then(res => {
                 expect(res.status).toBe(200)
             })
+        })
+
+        it('should return {api: "Running Successfully!"}', () => {
+            return supertest(server)
+            .get('/')
+            .then(res => {
+                expect(res.body).toEqual({api: "Running Successfully!"})
+            })
+
         })
     })
 })
