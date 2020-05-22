@@ -53,7 +53,7 @@ router.post('/', (req, res) => {
         })
     })
     .catch(err => {
-        console.loge({err})
+        console.log({err})
         res.status(500).json({
             message: "There was an error creating this project"
         })
@@ -63,9 +63,9 @@ router.post('/', (req, res) => {
 router.post('/resources', (req, res) => {
     const newRes = req.body
     Proj.addResource(newRes)
-    .then(success => {
+    .then(resource => {
         res.status(201).json({
-            success: success
+            success: resource
         })
     })
     .catch(err => {
@@ -85,7 +85,7 @@ router.post('/tasks', (req, res) => {
         })
     })
     .catch(err => {
-        console.loge({err})
+        console.log({err})
         res.status(500).json({
             message: "There was an error creating this task"
         })
@@ -171,7 +171,7 @@ router.put('/:id', (req, res) => {
         res.status(200).json(updated)
     })
     .catch(err => {
-        console.loge({err})
+        console.log({err})
         res.status(500).json({
             message: "There was an error updating this project"
         })
@@ -186,7 +186,7 @@ router.put('/resources/:id', (req, res) => {
         res.status(200).json(updated)
     })
     .catch(err => {
-        console.loge({err})
+        console.log({err})
         res.status(500).json({
             message: "There was an error updating this resource"
         })
@@ -200,7 +200,7 @@ router.put('/tasks/:id', (req, res) => {
         res.status(200).json(updated)
     })
     .catch(err => {
-        console.loge({err})
+        console.log({err})
         res.status(500).json({
             message: "There was an error updating this task"
         })

@@ -1,5 +1,12 @@
 const supertest = require('supertest')
 const server = require('../server')
+const db = require('../data/db-config')
+
+afterEach(async () => {
+    await db('task').truncate()
+    db('resource').truncate()
+    db('project').truncate()
+})
 
 describe('project-router', () => {
     it('can run the test', () => {
@@ -14,7 +21,6 @@ describe('project-router', () => {
                 expect(Array.isArray(result.body)).toBe(true)
             })
         })
-        it.todo('should ????')
     })
 
     describe('GET /resources', () => {
@@ -26,7 +32,6 @@ describe('project-router', () => {
             })
         })
 
-        it.todo('should ????')
     })
 
     describe('GET /tasks', () => {
@@ -48,29 +53,62 @@ describe('project-router', () => {
                 expect(response.status).toEqual(201)
             })
         })
-        it.todo('should return that object (array of 1)')
+        it('should return that object (array of 1)', () => {
+            return supertest(server)
+            .post('/api/projects')
+            .send({name: "Take a break", description: "It's important, you can do this!"})
+            .then(response => {
+                expect(Array(response.body)).toHaveLength(1)
+            })
+        })
     })
 
     describe('POST /resources', () => {
-        // it('should add a new resource', () => {
-        //     return supertest(server)
-        //     .post('/api/projects/resources')
-        //     .send({name: "Bed", description: "for napping"})
-        //     .then(response => {
-        //         expect(response.status).toEqual(201)
-        //     })
-        // })
+        it('should add a new resource', () => {
+            return supertest(server)
+            .post('/api/projects/resources')
+            .send({name: "Snacks", description: "for the nomm nummy goodness"})
+            .then(response => {
+                expect(response.status).toEqual(201)
+            })
+        })
 
-        it.todo('should return that object (array of 1)')
+        it('should return that object (array of 1)', () => {
+            return supertest(server)
+            .post('/api/projects/resources')
+            .send({name: "Take a break", description: "It's important, you can do this!"})
+            .then(response => {
+                expect(Array(response.body)).toHaveLength(1)
+            })
+        })
     })
 
     describe('POST /tasks', () => {
-        it.todo('should add a new task')
-        it.todo('should return that object (array of 1)')
+        it('should add a new task', () => {
+            return supertest(server)
+            .post('/api/projects/tasks')
+            .send({projectID: 1, description: "Test my API", notes: "Testing back end"})
+            .then(response => {
+                expect(response.status).toEqual(201)
+            })
+        })
+
+        it('should return that object (array of 1)', () => {
+            return supertest(server)
+            .post('/api/projects/tasks')
+            .send({name: "Test my API", description: "Testing backend"})
+            .then(response => {
+                expect(Array(response.body)).toHaveLength(1)
+            })
+        })
     })
 
     describe('DELETE /:id', () => {
-        it.todo('should delete a project with given id')
+        it('should delete a project with given id', () => {
+            return supertest(server)
+            .del(`/:id`)
+            .end()
+        })
     })
 
 })
